@@ -77,10 +77,6 @@ public class TextProcessor {
 
         List<String> mostFreqWords = frequentlyUsedWords("G:harry.txt");
 
-        String str = "----------------------------" + "\n"
-                + " HEAD for the task 1" + "\n"
-                + "-----------------------------------" + "\n";
-
         writeToFile(mostFreqWords);
 
 
