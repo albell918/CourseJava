@@ -1,6 +1,9 @@
 package Task1;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -10,15 +13,13 @@ import java.util.stream.Collectors;
  * @author Bieliaiev Oleksandr
  * @version 1.0.0
  * @project CourseJava
- * @class TexrProcessor
+ * @class TextProcessor
  * @since 19.04.2021 - 18.06
  */
 public class TextProcessor {
 
 
-
-
-    public static void frequentlyUsedWords(String path) throws IOException {
+    public static List<String> frequentlyUsedWords(String path) throws IOException {
 
         String textRaw = new String(Files.readAllBytes(Paths.get(path)));
 
@@ -52,48 +53,34 @@ public class TextProcessor {
                 .forEachOrdered(entry -> sorted.put(entry.getKey(), entry.getValue()));
 
         sorted.entrySet().stream().limit(20).forEach(System.out::println);
-}
 
-public static void findNames(String path) throws IOException {
-
-    String textRaw = new String(Files.readAllBytes(Paths.get(path)));
-
-    textRaw = textRaw.toLowerCase().replaceAll("[^A-Za-z ']", "");
-
-    String[] words = textRaw.split("\\s+");
-
-    List<String> list = Arrays.stream(words).collect(Collectors.toList());
-
-
-    boolean isUppercase;
-
-    int counter = -1;
-
-    for (int i = 0; i < 100; i++) {
-        counter++;
-
-        String [] myWord = words[i].split("(?!^)");
-
-
-
-       isUppercase = myWord[0].chars().noneMatch(Character::isUpperCase);
-
-        if (isUppercase==true){
-            System.out.println(myWord[counter]);
-        }
-
+        return sorted.entrySet().stream().limit(20).map(Map.Entry::getKey).collect(Collectors.toList());
     }
 
-};
+
+    public static void writeToFile(List<String> mostFreqWords) throws IOException {
+
+        Writer writer = new BufferedWriter(new FileWriter("J:CourseOutput.txt"));
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String mostFreqWord : mostFreqWords) {
+            sb.append(mostFreqWord).append("\n");
+        }
+        writer.write(sb.toString());
+
+        writer.close();
+
+    }
 
     public static void main(String[] args) throws IOException {
-        frequentlyUsedWords("G:harry.txt");
-        findNames("G:harry.txt");
 
-//        Files.write(Paths.get("G:CourseOutput.txt"), str.getBytes(StandardCharsets.UTF_8));
+        List<String> mostFreqWords = frequentlyUsedWords("G:harry.txt");
+
+        writeToFile(mostFreqWords);
+
 
     }
-
 }
 
 //        the=3628
