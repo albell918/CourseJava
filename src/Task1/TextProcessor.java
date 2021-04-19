@@ -1,9 +1,7 @@
 package Task1;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -67,7 +65,9 @@ public class TextProcessor {
         for (String mostFreqWord : mostFreqWords) {
             sb.append(mostFreqWord).append("\n");
         }
-        writer.write(sb.toString());
+        writer.write("----------------------------" + "\n"
+                + " HEAD for the task 1" + "\n"
+                + "-----------------------------------" + "\n"+sb.toString());
 
         writer.close();
 
@@ -76,6 +76,10 @@ public class TextProcessor {
     public static void main(String[] args) throws IOException {
 
         List<String> mostFreqWords = frequentlyUsedWords("G:harry.txt");
+
+        String str = "----------------------------" + "\n"
+                + " HEAD for the task 1" + "\n"
+                + "-----------------------------------" + "\n";
 
         writeToFile(mostFreqWords);
 
